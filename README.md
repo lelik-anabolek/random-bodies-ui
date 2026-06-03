@@ -1,4 +1,23 @@
-# Rspack project
+# Random Bodies Web UI
+
+## Why
+
+This repository handles the representation of three random bodies movement.
+[Main project](https://github.com/lelik-anabolek/three-random-bodies)
+
+## Roadmap
+
+UI:
+
+- [ ] **WIP** adjusting bodies, velocities, vectors of accelerations
+- [ ] calculations log
+- [ ] live plotter with bodies and trajectories
+
+Backend:
+
+- [ ] bodies interaction calculations by WASM
+- [ ] export calculation results
+- [ ] export GIF, video of plotter
 
 ## Setup
 
