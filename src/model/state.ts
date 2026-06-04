@@ -1,5 +1,6 @@
 import { createStore } from 'effector';
 import { domain } from './domain';
+import { changeBodyParam } from './events';
 
 interface Body {
   x: number;
@@ -14,7 +15,7 @@ interface Body {
 }
 
 export type AppState = {
-  bodies: [Body, Body, Body];
+  bodies: Body[];
 };
 
 const INITIAL_STATE: AppState = {
@@ -55,4 +56,16 @@ const INITIAL_STATE: AppState = {
   ],
 };
 
-export const $appState = createStore<AppState>(INITIAL_STATE, { domain });
+export const $appState = createStore<AppState>(INITIAL_STATE, { domain }).on(
+  changeBodyParam,
+  (state, { field, bodyIndex, value }) => {
+    const parsedValue = field !== 'color' ? parseFloat(value) : value;
+
+    return {
+      ...state,
+      bodies: state.bodies.map((b, i) =>
+        i === bodyIndex ? { ...b, [field]: parsedValue } : b,
+      ),
+    };
+  },
+);

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { $appState, type AppState } from '../appState/state';
+import { $appState, type AppState } from '../../model/state';
 
 export type CreateSceneT = {
   scene: THREE.Scene;
