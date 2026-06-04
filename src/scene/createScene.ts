@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { $appState, type AppState } from '../appState/state';
 
 export type CreateSceneT = {
   scene: THREE.Scene;
@@ -12,6 +13,17 @@ export type CreateSceneT = {
   camera: THREE.PerspectiveCamera;
   renderer: THREE.WebGLRenderer;
 };
+
+const createBodies = (bodies: AppState['bodies']) => {
+  return bodies.map(
+    (b) =>
+      new THREE.Mesh(
+        new THREE.SphereGeometry(b.radius, 32, 32),
+        new THREE.MeshBasicMaterial({ color: b.color }),
+      ),
+  );
+};
+
 export function createScene(container: HTMLElement): CreateSceneT {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xf0f0f0);
@@ -22,7 +34,7 @@ export function createScene(container: HTMLElement): CreateSceneT {
     0.1,
     1000,
   );
-  camera.position.set(20, 20, 20);
+  camera.position.set(120, 120, 120);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -33,7 +45,7 @@ export function createScene(container: HTMLElement): CreateSceneT {
   const axesHelper = new THREE.AxesHelper(10);
   scene.add(axesHelper);
 
-  const size = 20;
+  const size = 100;
   const divisions = 20;
 
   const gridHelperXY = new THREE.GridHelper(size, divisions);
@@ -47,20 +59,14 @@ export function createScene(container: HTMLElement): CreateSceneT {
   gridHelperYZ.rotation.z = Math.PI / 2;
   scene.add(gridHelperYZ);
 
-  const bodies = [
-    new THREE.Mesh(
-      new THREE.SphereGeometry(0.5, 32, 32),
-      new THREE.MeshBasicMaterial({ color: 0xff0000 }),
-    ),
-    new THREE.Mesh(
-      new THREE.SphereGeometry(0.7, 32, 32),
-      new THREE.MeshBasicMaterial({ color: 0x00ff00 }),
-    ),
-    new THREE.Mesh(
-      new THREE.SphereGeometry(0.4, 32, 32),
-      new THREE.MeshBasicMaterial({ color: 0x0000ff }),
-    ),
-  ];
+  const initState = $appState.getState();
+  const spheres = createBodies(initState.bodies);
+
+  spheres.forEach((s, i) => {
+    const { x, y, z } = initState.bodies[i];
+    s.position.add(new THREE.Vector3(x, y, z));
+    scene.add(s);
+  });
 
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -70,7 +76,7 @@ export function createScene(container: HTMLElement): CreateSceneT {
 
   return {
     scene,
-    bodies,
+    bodies: spheres,
     controls,
     camera,
     renderer,
