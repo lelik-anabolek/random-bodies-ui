@@ -9,13 +9,13 @@ This repository handles the representation of three random bodies movement.
 
 UI:
 
-- [ ] **WIP** adjusting bodies, velocities, vectors of accelerations
+- [x] adjusting bodies, velocities, vectors of accelerations(inputs)
 - [ ] calculations log
 - [ ] live plotter with bodies and trajectories
 
 Backend:
 
-- [ ] bodies interaction calculations by WASM
+- [ ] **WIP** bodies interaction calculations by WASM
 - [ ] export calculation results
 - [ ] export GIF, video of plotter
 
