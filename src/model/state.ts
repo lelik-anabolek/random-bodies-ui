@@ -29,7 +29,7 @@ const INITIAL_STATE: AppState = {
       velZ: 0,
       mass: 10,
       radius: 1,
-      color: 'rgb(255, 0, 0)',
+      color: '#ff0000',
     },
     {
       x: 0,
@@ -40,7 +40,7 @@ const INITIAL_STATE: AppState = {
       velZ: 0,
       mass: 10,
       radius: 1,
-      color: 'rgb(0, 255, 0)',
+      color: '#00ff00',
     },
     {
       x: 4,
@@ -51,7 +51,7 @@ const INITIAL_STATE: AppState = {
       velZ: 0,
       mass: 10,
       radius: 1,
-      color: 'rgb(0, 0, 255)',
+      color: '#0000ff',
     },
   ],
 };
