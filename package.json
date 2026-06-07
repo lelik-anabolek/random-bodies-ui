@@ -7,26 +7,11 @@
     "url": "https://github.com/lelik-anabolek/random-bodies-ui"
   },
   "scripts": {
-    "build": "rspack build",
-    "dev": "rspack dev",
-    "format": "prettier --write .",
-    "lint": "eslint .",
-    "preview": "rspack preview"
-  },
-  "dependencies": {
-    "effector": "^23.4.4",
-    "reset.css": "^2.0.2",
-    "three": "^0.184.0"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.39.0",
-    "@rspack/cli": "^1.6.7",
-    "@rspack/core": "^1.6.7",
-    "@types/three": "^0.184.1",
-    "eslint": "^9.39.0",
-    "globals": "^16.4.0",
-    "prettier": "^3.6.2",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.2"
+    "build:wasm": "cd wasm && wasm-pack build --target web --out-dir ../ui/pkg",
+    "dev": "npm run build:wasm && cd ui && npm run dev",
+    "build": "npm run build:wasm && cd frontend && npm run build",
+    "format:wasm": "cd wasm && cargo clippy --fix",
+    "format:ui": "cd ui && npm run lint",
+    "format": "npm run format:wasm && npm run format:ui"
   }
 }
