@@ -1,7 +1,7 @@
-import { $appState } from '../../model/state';
+import { $appStore } from '../../model/store';
 
 export function hydrateDOMFromState() {
-  const state = $appState.getState();
+  const state = $appStore.getState();
 
   state.bodies.forEach((body, bodyIndex) => {
     Object.entries(body).forEach(([field, value]) => {

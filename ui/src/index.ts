@@ -2,16 +2,31 @@ import 'reset.css';
 
 import { createScene } from './view/scene/createScene';
 import { animateControls } from './view/scene/animateControls';
+import { animateBodiesControls } from './view/scene/animateBodies';
+
 import { bindBodyInputEvent } from './view/bodiesCockpit/bindBodyInputEvent';
 import { hydrateDOMFromState } from './view/bodiesCockpit/hydrate';
-import { changeBodyParam } from './model/events';
+import {
+  changeBodyParam,
+  startCalculate,
+  startAnimation,
+} from './model/events';
+import runWASM from '../pkg/wasm';
+
 const container = document.getElementById('scene')!;
+
+runWASM();
 
 hydrateDOMFromState();
 
 const { scene, controls, bodies, renderer, camera } = createScene(container);
 
 animateControls({ controls, scene, renderer, camera });
+const { play } = animateBodiesControls({ scene, bodies, renderer, camera });
+
+startAnimation.watch(() => {
+  play();
+});
 
 const bodyInputs =
   document.querySelectorAll<HTMLInputElement>('input[data-body]');
@@ -49,4 +64,10 @@ changeBodyParam.watch(({ bodyIndex, value, field }) => {
     default:
       break;
   }
+});
+
+const calcButton = document.getElementById('calculate');
+
+calcButton?.addEventListener('click', () => {
+  startCalculate();
 });
