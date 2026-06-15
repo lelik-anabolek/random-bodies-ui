@@ -230,7 +230,7 @@ checksum = "f70749695b063ecbf6b62949ccccde2e733ec3ecbbd71d467dca4e5c6c97cca0"
 [[package]]
 name = "gravity-interaction-calc"
 version = "0.0.1"
-source = "git+https://github.com/lelik-anabolek/gravity-interaction-calc#2ded939fa30d45e7408b59a0a2aea0634e8a8adb"
+source = "git+https://github.com/lelik-anabolek/gravity-interaction-calc#b0a31f4821a8f2749b8a8e80e6ac5619fdd262aa"
 dependencies = [
  "nalgebra",
  "ode_solvers",

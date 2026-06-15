@@ -1,14 +1,8 @@
 import { createStore, sample } from 'effector';
 import { domain } from './domain';
-import {
-  changeBodyParam,
-  startCalculate,
-  stopAnimation,
-  nextFrame,
-  startAnimation,
-} from './events';
+import { changeBodyParam, startCalculate } from './events';
 import { calculateFx } from './effects';
-import { BodyInput } from '../../pkg/wasm';
+import { BodyInput } from '../../../pkg/wasm';
 
 interface Body {
   x: number;
@@ -63,35 +57,6 @@ const INITIAL_STATE_APP_STORE: AppStore = {
     },
   ],
 };
-
-type AnimationStore = {
-  time: number[] | null;
-  positions: number[][] | null;
-  frame: number;
-  playing: boolean;
-};
-
-const INITIAL_STATE_ANIMATION_STORE: AnimationStore = {
-  time: null,
-  positions: null,
-  frame: 0,
-  playing: false,
-};
-
-export const $animationStore = createStore<AnimationStore>(
-  INITIAL_STATE_ANIMATION_STORE,
-  { domain },
-)
-  .on(calculateFx.doneData, (state, payload) => ({
-    ...state,
-    ...payload,
-    frame: 0,
-    playing: true,
-  }))
-  .on(stopAnimation, (state) => ({ ...state, playing: false }))
-  .on(nextFrame, (state) => ({ ...state, frame: state.frame + 1 }));
-
-sample({ clock: calculateFx.doneData, target: startAnimation });
 
 export const $appStore = createStore<AppStore>(INITIAL_STATE_APP_STORE, {
   domain,

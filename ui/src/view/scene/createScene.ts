@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { $appStore, type AppStore } from '../../model/store';
+import { $appStore, type AppStore } from '../../model/bodies/store';
 
 export type CreateSceneT = {
   scene: THREE.Scene;

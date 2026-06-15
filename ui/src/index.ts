@@ -6,11 +6,13 @@ import { animateBodiesControls } from './view/scene/animateBodies';
 
 import { bindBodyInputEvent } from './view/bodiesCockpit/bindBodyInputEvent';
 import { hydrateDOMFromState } from './view/bodiesCockpit/hydrate';
-import {
-  changeBodyParam,
-  startCalculate,
-  startAnimation,
-} from './model/events';
+import { changeBodyParam, startCalculate } from './model/bodies/events';
+import { play, pause } from './model/player/events';
+
+import './model/bodies/store';
+import './model/animation/store';
+import './model/player/store';
+
 import runWASM from '../pkg/wasm';
 
 const container = document.getElementById('scene')!;
@@ -22,11 +24,7 @@ hydrateDOMFromState();
 const { scene, controls, bodies, renderer, camera } = createScene(container);
 
 animateControls({ controls, scene, renderer, camera });
-const { play } = animateBodiesControls({ scene, bodies, renderer, camera });
-
-startAnimation.watch(() => {
-  play();
-});
+animateBodiesControls({ scene, bodies, renderer, camera });
 
 const bodyInputs =
   document.querySelectorAll<HTMLInputElement>('input[data-body]');
@@ -57,7 +55,6 @@ changeBodyParam.watch(({ bodyIndex, value, field }) => {
       break;
     }
     case 'color': {
-      console.log(value);
       body.material.setValues({ color: value });
       break;
     }
@@ -67,7 +64,17 @@ changeBodyParam.watch(({ bodyIndex, value, field }) => {
 });
 
 const calcButton = document.getElementById('calculate');
+const playButton = document.getElementById('play');
+const pauseButton = document.getElementById('pause');
 
 calcButton?.addEventListener('click', () => {
   startCalculate();
+});
+
+playButton?.addEventListener('click', () => {
+  play();
+});
+
+pauseButton?.addEventListener('click', () => {
+  pause();
 });
