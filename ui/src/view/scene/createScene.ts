@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { $appState, type AppState } from '../../model/state';
+import { $appStore, type AppStore } from '../../model/store';
 
 export type CreateSceneT = {
   scene: THREE.Scene;
@@ -14,7 +14,7 @@ export type CreateSceneT = {
   renderer: THREE.WebGLRenderer;
 };
 
-const createBodies = (bodies: AppState['bodies']) => {
+const createBodies = (bodies: AppStore['bodies']) => {
   return bodies.map(
     (b) =>
       new THREE.Mesh(
@@ -59,7 +59,7 @@ export function createScene(container: HTMLElement): CreateSceneT {
   gridHelperYZ.rotation.z = Math.PI / 2;
   scene.add(gridHelperYZ);
 
-  const initState = $appState.getState();
+  const initState = $appStore.getState();
   const spheres = createBodies(initState.bodies);
 
   spheres.forEach((s, i) => {
