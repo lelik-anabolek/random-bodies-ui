@@ -1,5 +1,6 @@
 import { setFrame } from '../../model/animation/events';
 import { $animationStore } from '../../model/animation/store';
+import { setSliderValueFx } from '../../model/player/effects';
 import { pause, play } from '../../model/player/events';
 
 import type { CreateSceneT } from './createScene';
@@ -19,7 +20,6 @@ export const animateBodiesControls = ({
     const { frame, positions, time } = $animationStore.getState();
     if (positions === null || time === null) {
       pause();
-      startRealTime = 0;
       return;
     }
 
@@ -37,10 +37,8 @@ export const animateBodiesControls = ({
       f++;
     }
 
-    if (f >= positions.length) {
-      pause();
-      startRealTime = 0;
-      return;
+    if (f >= positions.length - 1) {
+      f = positions.length - 1;
     }
 
     const p = positions[f];
@@ -51,7 +49,12 @@ export const animateBodiesControls = ({
     }
 
     renderer.render(scene, camera);
+    setSliderValueFx(f);
     setFrame(f);
+
+    if (f === positions.length - 1) {
+      pause();
+    }
   };
 
   play.watch(() => {

@@ -2,7 +2,7 @@ import { createStore, sample } from 'effector';
 import { domain } from './domain';
 import { play, pause, setMs } from './events';
 import { calculateFx } from '../bodies/effects';
-import { showPlayerFx } from './effects';
+import { showPlayerFx, setSliderFrameMaxValueFx } from './effects';
 
 type PlayerStore = {
   playing: boolean;
@@ -22,3 +22,8 @@ export const $playerStore = createStore<PlayerStore>(INIT_STORE, { domain })
   .on(setMs, (state, ms) => ({ ...state, currentMs: ms }));
 
 sample({ clock: calculateFx.done, target: showPlayerFx });
+sample({
+  clock: calculateFx.doneData,
+  fn: ({ time }) => time.length - 1,
+  target: setSliderFrameMaxValueFx,
+});

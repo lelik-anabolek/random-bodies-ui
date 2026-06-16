@@ -8,12 +8,14 @@ import { bindBodyInputEvent } from './view/bodiesCockpit/bindBodyInputEvent';
 import { hydrateDOMFromState } from './view/bodiesCockpit/hydrate';
 import { changeBodyParam, startCalculate } from './model/bodies/events';
 import { play, pause } from './model/player/events';
+import { $animationStore } from './model/animation/store';
 
 import './model/bodies/store';
 import './model/animation/store';
 import './model/player/store';
 
 import runWASM from '../pkg/wasm';
+import { setFrame } from './model/animation/events';
 
 const container = document.getElementById('scene')!;
 
@@ -66,6 +68,7 @@ changeBodyParam.watch(({ bodyIndex, value, field }) => {
 const calcButton = document.getElementById('calculate');
 const playButton = document.getElementById('play');
 const pauseButton = document.getElementById('pause');
+const frameRangeSlider = document.getElementById('frame-range');
 
 calcButton?.addEventListener('click', () => {
   startCalculate();
@@ -77,4 +80,20 @@ playButton?.addEventListener('click', () => {
 
 pauseButton?.addEventListener('click', () => {
   pause();
+});
+
+frameRangeSlider?.addEventListener('change', (event) => {
+  const { positions } = $animationStore.getState();
+  const frame = parseInt(event.target.value, 10);
+
+  if (!positions || frame > positions.length) return;
+
+  const p = positions[frame];
+
+  for (let i = 0; i < bodies.length; i++) {
+    const i3 = i * 3;
+    bodies[i].position.set(p[i3], p[i3 + 1], p[i3 + 2]);
+  }
+
+  setFrame(frame);
 });
