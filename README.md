@@ -11,11 +11,11 @@ UI:
 
 - [x] adjusting bodies, velocities, vectors of accelerations(inputs)
 - [ ] calculations log
-- [ ] live plotter with bodies and trajectories
+- [x] live plotter with bodies and trajectories
 
 Backend:
 
-- [ ] **WIP** bodies interaction calculations by WASM
+- [x] bodies interaction calculations by WASM
 - [ ] export calculation results
 - [ ] export GIF, video of plotter
 

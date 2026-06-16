@@ -1,4 +1,4 @@
-import { changeBodyParam } from '../../model/events';
+import { changeBodyParam } from '../../model/bodies/events';
 
 function handler(event: Event) {
   const { body, field } = event.target.dataset as any;

@@ -1,4 +1,4 @@
-import { $appStore } from '../../model/store';
+import { $appStore } from '../../model/bodies/store';
 
 export function hydrateDOMFromState() {
   const state = $appStore.getState();

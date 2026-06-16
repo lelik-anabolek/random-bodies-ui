@@ -184,8 +184,13 @@
             </tr>
           </tbody>
         </table>
-        <button id="calculate" type="button">Calculate</button>
       </form>
+      <button id="calculate" type="button">Calculate</button>
+      <div id="player-block" style="visibility: hidden;">
+        <button type="button" id="play">Play</button>
+        <button type="button" id="pause">Pause</button>
+        <input type="range" id="frame-range" value="0" min="0" step="1" />
+      </div>
     </aside>
   </body>
 </html>

@@ -20,17 +20,3 @@ export const startCalculate = createEvent({
   domain,
 });
 
-export const startAnimation = createEvent({
-  name: 'startAnimation',
-  domain,
-});
-
-export const stopAnimation = createEvent({
-  name: 'stopAnimation',
-  domain,
-});
-
-export const nextFrame = createEvent({
-  name: 'nextFrame',
-  domain,
-});

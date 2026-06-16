@@ -1,6 +1,6 @@
 import { createEffect } from 'effector';
 import { domain } from './domain';
-import { BodyInput, integrate_wasm } from '../../pkg/wasm';
+import { BodyInput, integrate_wasm } from '../../../pkg/wasm';
 
 export type CalculateFXResult = {
   time: number[];
@@ -12,7 +12,6 @@ export const calculateFx = createEffect({
   domain,
   handler: (bodies: BodyInput[]): CalculateFXResult => {
     const result = integrate_wasm(bodies);
-
     if (typeof result === 'string' && result.includes('error')) {
       throw Error(result);
     }
